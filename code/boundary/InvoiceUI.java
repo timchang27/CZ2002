@@ -10,45 +10,59 @@ public class InvoiceUI {
     public void run(){
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("--------Invoice and Report Printer--------");
+        System.out.println("--------Invoice and Report Panel--------");
         System.out.println("1. printInvoice"+
                 "\n2. print daily revenue report"+
-                "\n3. print monthly revenue report");
+                "\n3. print monthly revenue report"+
+                "\n4. back to main panel");
 
         int choice = sc.nextInt();
-        switch(choice){
-            case 1:
-                printInvoice();
-                break;
-            case 2:
-                printRevenueReportByDay();
-                break;
-            case 3:
-                printRevenueReportByMonth();
-                break;
-            case 4:
-                break;
+        while(true) {
+            switch (choice) {
+                case 1:
+                    createInvoice();
+                    break;
+                case 2:
+                    printRevenueReportByDay();
+                    break;
+                case 3:
+                    printRevenueReportByMonth();
+                    break;
+                case 4:
+                    System.out.println("back to main panel...");
+                    return;
+                default:
+                    System.out.println("invalid input!");
+            }
+            System.out.println("enter option:");
+            choice = sc.nextInt();
         }
     }
 
-    private void printInvoice(){
+    private void createInvoice(){
         Scanner sc = new Scanner(System.in);
         int orderId;
-        System.out.print("enter order ID:");
+        System.out.print("enter order ID:");                                // handle invalid input  1. in the orderList
+        //                                                                                            2. not been checked out
         orderId = sc.nextInt();
 
-        System.out.println("enter your phoneNumber yyyymmdd"); // use phone number or name?
+        System.out.println("enter phoneNumber to check membership");
 
-        String number = sc.nextLine();
+        String number = sc.next();
         invoiceController.printInvoice(orderId, number);
 
     }
 
     private void printRevenueReportByDay(){
         Scanner sc= new Scanner(System.in);
-        System.out.println("enter the date: ()");
-        String dateString = sc.nextLine();
-        Date date = new Date()
+        System.out.println("enter the date: (dd/mm/yyyy)");
+        String dateString = sc.next();
+
     }
-    private void printRevenueReportByMonth(){}
+    private void printRevenueReportByMonth(){
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Please enter the month(MM/YYYY)");
+        String dateStr = sc.next();
+        invoiceController.printMonthlyReport(dateStr);
+    }
 }
