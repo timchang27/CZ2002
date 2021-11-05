@@ -1,8 +1,12 @@
 import javax.swing.plaf.synth.SynthOptionPaneUI;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
-public class Invoice {
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
+public class Invoice implements Serializable {
     private int invoiceID;
     private int orderID;
     private Order order;
@@ -15,41 +19,90 @@ public class Invoice {
     private boolean isMember;
     private double afterDiscount;
 
-    public Invoice(int id, int OrderId, Order order, double subtotal, double afterDiscount, double serviceCharge, double GST, double total){
+//    public Invoice(int id, int OrderId, Order order, double subtotal, double afterDiscount, double serviceCharge, double GST, double total){
+//        invoiceID = id;
+//        orderID = OrderId;
+//        date = LocalDate.now();
+//        time = LocalTime.now();
+//        this.order = order;   //order cannot be saved in the txt file
+//        this.subtotal = subtotal;
+//        this.afterDiscount = afterDiscount;
+//        this.serviceCharge = serviceCharge;
+//        this.GST = GST;
+//        this.total = total;
+//    }
+
+//    public String toString(){
+//
+//        return(
+//                "\t\t\tOODP RESTAUTRANT\t\t\t"+
+//              "\n\tINVOICE #: "  + invoiceID + " \t\t\t"+
+//              "\n\tServer: " +order.getStaff() + "\t\tTable: " + order.getTableId() +
+//              "\n\tDate Time: " + date+time+
+//              "\n\tClient: " + order.getNumber()+
+//              "\n--------------------------------------------------------------" +
+//              order.toString()+
+//              "\n--------------------------------------------------------------" +
+//              "\n\t\t\t\t\t\t\t\t\t\tSubTotal:  " + subtotal+
+//              "\n\t\t\t\t\t\t\t\t\tafter discount :   " + afterDiscount+
+//              "\n\t\t\t\t\t\t\t\t\t\tGST:        " + GST+
+//              "\n\t\t\t\t\t\t\t\t\t10% SERVICE CHARGE " + serviceCharge+
+//              "\n--------------------------------------------------------------" +
+//              "\n\t\t\t\t\t\t\t\t\t\tTOTAL: " + total +
+//              "\n\n=============================================================="  +
+//              "\n\t\t Thank you for dining with us! "
+//                );
+//    }
+
+    //test code
+        public Invoice(int id, int OrderId, LocalDate date, LocalTime time,Order order, double subtotal, double afterDiscount, double serviceCharge, double GST, double total){
         invoiceID = id;
         orderID = OrderId;
-        this.order = order;
+        this.date = date;
+        this.time = time;
+        this.order = order;   //order cannot be saved in the txt file
         this.subtotal = subtotal;
+        this.afterDiscount = afterDiscount;
         this.serviceCharge = serviceCharge;
         this.GST = GST;
         this.total = total;
-        date = LocalDate.now();
-        time = LocalTime.now();
-        this.afterDiscount = afterDiscount;
     }
+
+    public int getInvoiceID(){return invoiceID;}
+    public int getOrderID(){return orderID;}
+    public LocalDate getDate(){
+            return date;
+    }
+    public LocalTime getTime(){ return time;}
+    public double getSubtotal(){return subtotal;}
+    public double getServiceCharge(){return serviceCharge;}
+    public double getGST(){return GST;}
+    public double getTotal(){
+         return total;
+    }
+
     public String toString(){
+
         return(
-                "\t\t\tOODP RESTAUTRANT\t\t\t"+
-              "\n\tINVOICE #: "  + invoiceID + " \t\t\t"+
-              "\n\tServer: " +order.getStaff() + "\t\tTable: " + order.getTableId() +
-              "\n\tDate Time: " + date+time+
-              "\n\tClient: " + order.getNumber()+
-              "\n--------------------------------------------------------------" +
-              order.toString()+
-              "\n--------------------------------------------------------------" +
-              "\n\t\t\t\t\t\t\t\t\t\tSubTotal:  " + subtotal+
-              "\n\t\t\t\t\t\t\t\t\tafter discount :   " + afterDiscount+
-              "\n\t\t\t\t\t\t\t\t\t\tGST:        " + GST+
-              "\n\t\t\t\t\t\t\t\t\t10% SERVICE CHARGE " + serviceCharge+
-              "\n--------------------------------------------------------------" +
-              "\n\t\t\t\t\t\t\t\t\t\tTOTAL: " + total +
-              "\n\n=============================================================="  +
-              "\n\t\t Thank you for dining with us! "
-                );
+
+                        "=========================RESTAURANT=========================="+
+                        "\nINVOICE #: "  + invoiceID + " \t\t\t"+
+                        "\nServer: " + "order.getStaff()" + "\t\tTable: " + "order.getTableId()" +
+                        "\nDate Time: " + date+"    "+time.truncatedTo(ChronoUnit.SECONDS)+
+                        "\nClient: " + "order.getNumber()"+
+                        "\n--------------------------------------------------------------" +
+                        "\norder.toString()"+
+                        "\n--------------------------------------------------------------" +
+                        "\n\t\t\t\t\t\t\t\t\t\tSubTotal:  " + subtotal+
+                        "\n\t\t\t\t\t\t\t\t\t\tafter discount :   " + afterDiscount+
+                        "\n\t\t\t\t\t\t\t\t\t\tGST:        " +  String.format("%.2f",GST)+
+                        "\n\t\t\t\t\t\t\t\t\t\t10% SERVICE CHARGE " + serviceCharge+
+                        "\n--------------------------------------------------------------" +
+                        "\n\t\t\t\t\t\t\t\t\t\tTOTAL: " + total +
+                        "\n\n===========================END===============================\n\n"
+
+        );
     }
-
-
-
 
 
 
